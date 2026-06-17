@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday June 🎂</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:   #c9a84c;
+      --gold-lt:#f0d080;
+      --cream:  #fdf8f0;
+      --blush:  #f7e4e4;
+      --text:   #3a2a1a;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Hero / header ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #1a0a00 0%, #3b1f00 50%, #1a0a00 100%);
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    /* floating gold particles */
+    .particles { position: absolute; inset: 0; pointer-events: none; }
+    .particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-lt);
+      opacity: 0;
+      animation: float var(--dur, 6s) var(--delay, 0s) infinite ease-in-out;
+    }
+    @keyframes float {
+      0%   { transform: translateY(110vh) scale(.4); opacity: 0; }
+      10%  { opacity: .7; }
+      90%  { opacity: .5; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 8vw, 5.5rem);
+      color: var(--gold-lt);
+      letter-spacing: .06em;
+      text-shadow: 0 0 40px rgba(201,168,76,.6);
+      animation: fadeUp .9s ease both;
+    }
+    .hero-sub {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 3vw, 1.6rem);
+      color: #e8d5b0;
+      font-style: italic;
+      animation: fadeUp .9s .3s ease both;
+    }
+    .hero-date {
+      margin-top: .6rem;
+      font-size: clamp(.85rem, 2vw, 1.1rem);
+      color: var(--gold);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      animation: fadeUp .9s .5s ease both;
+    }
+    .scroll-hint {
+      margin-top: 2.5rem;
+      color: var(--gold);
+      font-size: .85rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      animation: fadeUp .9s .7s ease both, bounce 2s 1.6s infinite;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    /* ── Gallery section ── */
+    .gallery-section {
+      padding: 4rem 1rem 6rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .section-label {
+      text-align: center;
+      font-size: clamp(.75rem, 2vw, .9rem);
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    /* masonry-style grid */
+    .grid {
+      columns: 2;
+      column-gap: 12px;
+    }
+    @media (min-width: 640px)  { .grid { columns: 3; } }
+    @media (min-width: 1024px) { .grid { columns: 4; } }
+
+    .grid-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+      background: #111;
+    }
+    .grid-item:hover { transform: scale(1.02); box-shadow: 0 8px 30px rgba(201,168,76,.35); }
+
+    .grid-item img,
+    .grid-item video {
+      width: 100%;
+      display: block;
+      /* lazy loading via attribute */
+    }
+    .grid-item video { max-height: 420px; object-fit: cover; }
+
+    .media-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: .4rem .7rem;
+      background: linear-gradient(transparent, rgba(0,0,0,.55));
+      color: #fff;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .grid-item:hover .media-label { opacity: 1; }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: min(95vw, 900px);
+      max-height: 90svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-inner img,
+    .lightbox-inner video {
+      max-width: 100%;
+      max-height: 88svh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .lb-close {
+      position: fixed; top: 1.2rem; right: 1.4rem;
+      font-size: 2rem; color: #fff; cursor: pointer;
+      background: none; border: none; line-height: 1;
+      z-index: 1001;
+    }
+    .lb-arrow {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      font-size: 2.2rem; color: var(--gold);
+      background: none; border: none; cursor: pointer;
+      padding: .5rem; z-index: 1001;
+    }
+    .lb-prev { left: .8rem; }
+    .lb-next { right: .8rem; }
+    .lb-caption {
+      position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
+      color: #e8d5b0; font-size: .8rem; letter-spacing: .15em; text-transform: uppercase;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      color: var(--gold);
+      font-size: .8rem;
+      letter-spacing: .12em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section class="hero">
+  <div class="particles" id="particles"></div>
+  <h1 class="hero-title">Happy Birthday June</h1>
+  <p class="hero-sub">You mean the world to me.</p>
+  <p class="hero-date">June 19th</p>
+  <p class="scroll-hint">↓ scroll to relive the memories ↓</p>
+</section>
+
+<!-- ════════════════════════════════
+     GALLERY
+════════════════════════════════ -->
+<section class="gallery-section">
+  <p class="section-label">Moments with you</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- ════════════════════════════════
+     LIGHTBOX
+════════════════════════════════ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <div class="lightbox-inner" id="lbInner"></div>
+  <button class="lb-arrow lb-next" id="lbNext" aria-label="Next">›</button>
+  <p class="lb-caption" id="lbCaption"></p>
+</div>
+
+<footer>made with love &nbsp;♥&nbsp; june 19 · 2025</footer>
+
+<script>
+  /* ── Floating particles ── */
+  (function() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.setProperty('--dur',   (5 + Math.random() * 7) + 's');
+      p.style.setProperty('--delay', (Math.random() * 8) + 's');
+      p.style.left = (Math.random() * 100) + '%';
+      p.style.width = p.style.height = (3 + Math.random() * 6) + 'px';
+      container.appendChild(p);
+    }
+  })();
+
+  /* ── Media manifest
+       Files are served from the /media/ folder alongside index.html.
+       Images are renamed "Photo N", videos "Video N" for display.
+  ── */
+  const mediaFiles = [
+    { src: 'media/739576aa-04e5-471b-b57f-991cc88aef46.JPG', type: 'image' },
+    { src: 'media/85d63615-be3a-463f-ba0c-736ad5c78543.JPG',  type: 'image' },
+    { src: 'media/d81a0a9c-173c-4943-bf2c-782016ef876a.JPG',  type: 'image' },
+    { src: 'media/f366cdc6-5000-4284-b4cb-7bd37a7f9dc8.JPG',  type: 'image' },
+    { src: 'media/IMG_5443.jpg',  type: 'image' },
+    { src: 'media/IMG_5849.jpg',  type: 'image' },
+    { src: 'media/IMG_5851.jpg',  type: 'image' },
+    { src: 'media/IMG_5878.png',  type: 'image' },
+    { src: 'media/IMG_5883.png',  type: 'image' },
+    { src: 'media/IMG_6830.jpg',  type: 'image' },
+    { src: 'media/AA78DC42-013B-46D2-8A70-15B28D834A92.MP4', type: 'video' },
+    { src: 'media/A9A20D9C-3F48-47E4-821E-84E51CE9B3EA.MP4', type: 'video' },
+  ];
+
+  /* Assign display labels: Photo 1…N, Video 1…N */
+  let photoCount = 0, videoCount = 0;
+  mediaFiles.forEach(m => {
+    m.label = m.type === 'image'
+      ? 'Photo ' + (++photoCount)
+      : 'Video ' + (++videoCount);
+  });
+
+  /* ── Build grid ── */
+  const grid = document.getElementById('grid');
+
+  mediaFiles.forEach((m, idx) => {
+    const item = document.createElement('div');
+    item.className = 'grid-item';
+    item.dataset.idx = idx;
+
+    if (m.type === 'image') {
+      const img = document.createElement('img');
+      img.src = m.src;
+      img.alt = m.label;
+      img.loading = 'lazy';          /* native lazy load */
+      img.decoding = 'async';
+      item.appendChild(img);
+    } else {
+      const vid = document.createElement('video');
+      vid.src = m.src;
+      vid.preload = 'none';          /* lazy – only metadata on scroll */
+      vid.muted = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.controls = false;
+      /* play/pause on hover */
+      item.addEventListener('mouseenter', () => vid.play());
+      item.addEventListener('mouseleave', () => vid.pause());
+      item.appendChild(vid);
+    }
+
+    const label = document.createElement('span');
+    label.className = 'media-label';
+    label.textContent = m.label;
+    item.appendChild(label);
+
+    item.addEventListener('click', () => openLightbox(idx));
+    grid.appendChild(item);
+  });
+
+  /* ── Intersection observer for video lazy-load ── */
+  const vidObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      const vid = e.target.querySelector('video');
+      if (!vid) return;
+      if (e.isIntersecting) {
+        if (!vid.src) vid.src = vid.dataset.src;
+      }
+    });
+  }, { rootMargin: '200px' });
+  document.querySelectorAll('.grid-item').forEach(i => vidObserver.observe(i));
+
+  /* ── Lightbox ── */
+  const lightbox  = document.getElementById('lightbox');
+  const lbInner   = document.getElementById('lbInner');
+  const lbCaption = document.getElementById('lbCaption');
+  let currentIdx  = 0;
+  let lbVideo     = null;
+
+  function openLightbox(idx) {
+    currentIdx = idx;
+    renderLightbox();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderLightbox() {
+    if (lbVideo) { lbVideo.pause(); lbVideo = null; }
+    lbInner.innerHTML = '';
+    const m = mediaFiles[currentIdx];
+
+    if (m.type === 'image') {
+      const img = document.createElement('img');
+      img.src = m.src;
+      img.alt = m.label;
+      lbInner.appendChild(img);
+    } else {
+      const vid = document.createElement('video');
+      vid.src = m.src;
+      vid.controls = true;
+      vid.autoplay = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      lbInner.appendChild(vid);
+      lbVideo = vid;
+    }
+    lbCaption.textContent = m.label;
+  }
+
+  function closeLightbox() {
+    if (lbVideo) { lbVideo.pause(); lbVideo = null; }
+    lbInner.innerHTML = '';
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lbPrev').addEventListener('click', () => {
+    currentIdx = (currentIdx - 1 + mediaFiles.length) % mediaFiles.length;
+    renderLightbox();
+  });
+  document.getElementById('lbNext').addEventListener('click', () => {
+    currentIdx = (currentIdx + 1) % mediaFiles.length;
+    renderLightbox();
+  });
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape')      closeLightbox();
+    if (e.key === 'ArrowLeft')   { currentIdx = (currentIdx - 1 + mediaFiles.length) % mediaFiles.length; renderLightbox(); }
+    if (e.key === 'ArrowRight')  { currentIdx = (currentIdx + 1) % mediaFiles.length; renderLightbox(); }
+  });
+</script>
+</body>
+</html>
