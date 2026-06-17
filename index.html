@@ -5,22 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday June ✨</title>
   <style>
-    /* ───────────────────────────────────────────
-       TOKENS & RESET
-    ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold:      #c9a84c;
-      --gold-lt:   #f0d47a;
-      --gold-dk:   #8a6820;
-      --cream:     #fdf8ef;
-      --blush:     #faeaea;
-      --deep:      #0f0800;
-      --mid:       #2a1500;
-      --text-dark: #1a0e00;
-      --serif:     'Georgia', 'Times New Roman', serif;
-      --sans:      system-ui, -apple-system, sans-serif;
+      --gold:    #c9a84c;
+      --gold-lt: #f0d47a;
+      --gold-dk: #8a6820;
+      --cream:   #fdf8ef;
+      --deep:    #0c0600;
+      --mid:     #1c0d00;
+      --serif:   'Georgia', 'Times New Roman', serif;
+      --sans:    system-ui, -apple-system, sans-serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -31,642 +26,382 @@
       overflow-x: hidden;
     }
 
-    /* ───────────────────────────────────────────
-       MUSIC PLAYER (hidden YouTube iframe)
-    ─────────────────────────────────────────── */
+    /* ── MUSIC ── */
     #music-frame {
-      position: fixed;
-      width: 1px; height: 1px;
-      opacity: 0; pointer-events: none;
-      bottom: 0; right: 0;
+      position: fixed; width: 1px; height: 1px;
+      opacity: 0; pointer-events: none; bottom: 0; right: 0;
     }
-
-    /* floating music toggle */
     .music-btn {
-      position: fixed;
-      bottom: 1.4rem; right: 1.4rem;
-      width: 52px; height: 52px;
-      border-radius: 50%;
-      background: var(--gold);
-      border: none; cursor: pointer;
+      position: fixed; bottom: 1.4rem; right: 1.4rem;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--gold); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.3rem;
       box-shadow: 0 4px 20px rgba(201,168,76,.5);
-      z-index: 999;
-      transition: transform .2s, box-shadow .2s;
+      z-index: 999; transition: transform .2s, box-shadow .2s;
     }
     .music-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(201,168,76,.7); }
-    .music-btn .note { transition: transform .3s; display: inline-block; }
-    .music-btn.playing .note { animation: spin 3s linear infinite; }
+    .music-btn.playing .note { animation: spin 3s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ───────────────────────────────────────────
-       PARTICLES CANVAS
-    ─────────────────────────────────────────── */
-    #canvas {
-      position: fixed; inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
+    /* ── CANVAS ── */
+    #canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 
-    /* ───────────────────────────────────────────
-       HERO
-    ─────────────────────────────────────────── */
+    /* ── HERO ── */
     .hero {
-      position: relative;
-      min-height: 100svh;
+      position: relative; min-height: 100svh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      overflow: hidden;
-      z-index: 1;
+      text-align: center; padding: 2rem;
+      overflow: hidden; z-index: 1;
     }
-
-    /* layered radial glow backgrounds */
     .hero::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background:
         radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,.18) 0%, transparent 70%),
         radial-gradient(ellipse 120% 100% at 50% 100%, rgba(138,104,32,.25) 0%, transparent 60%),
-        linear-gradient(180deg, #0f0800 0%, #1c0d00 60%, #0f0800 100%);
+        linear-gradient(180deg, #0c0600 0%, #1c0d00 60%, #0c0600 100%);
       z-index: -1;
     }
 
     .hero-tag {
-      font-family: var(--sans);
-      font-size: .7rem;
-      letter-spacing: .35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: riseIn .7s .2s forwards;
+      font-family: var(--sans); font-size: .7rem;
+      letter-spacing: .35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+      opacity: 0; animation: riseIn .7s .2s forwards;
     }
-
     .hero-name {
-      font-size: clamp(4rem, 16vw, 11rem);
-      font-weight: 400;
-      line-height: .95;
-      letter-spacing: -.01em;
+      font-size: clamp(4.5rem, 18vw, 12rem); font-weight: 400;
+      line-height: .92; letter-spacing: -.01em;
       color: transparent;
       background: linear-gradient(135deg, #f5e09a 0%, #c9a84c 40%, #f0d47a 70%, #8a6820 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      text-shadow: none;
-      opacity: 0;
-      animation: riseIn .9s .4s forwards;
+      -webkit-background-clip: text; background-clip: text;
+      opacity: 0; animation: riseIn .9s .4s forwards;
     }
-
-    .hero-birthday {
-      font-size: clamp(1.1rem, 4vw, 2.2rem);
-      color: #e8d5b0;
-      font-style: italic;
-      margin-top: .8rem;
-      opacity: 0;
-      animation: riseIn .9s .7s forwards;
+    .hero-sub {
+      font-size: clamp(1rem, 3.5vw, 1.9rem);
+      color: #e8d5b0; font-style: italic; margin-top: .8rem;
+      opacity: 0; animation: riseIn .9s .7s forwards;
     }
-
     .hero-date {
-      margin-top: .6rem;
-      font-family: var(--sans);
-      font-size: clamp(.7rem, 1.8vw, .9rem);
-      letter-spacing: .3em;
-      text-transform: uppercase;
+      margin-top: .6rem; font-family: var(--sans);
+      font-size: clamp(.65rem, 1.8vw, .85rem);
+      letter-spacing: .3em; text-transform: uppercase;
       color: var(--gold);
-      opacity: 0;
-      animation: riseIn .9s .9s forwards;
+      opacity: 0; animation: riseIn .9s .9s forwards;
     }
-
     .hero-divider {
       width: 80px; height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       margin: 1.8rem auto;
-      opacity: 0;
-      animation: riseIn .9s 1.1s forwards;
+      opacity: 0; animation: riseIn .9s 1.1s forwards;
     }
-
     .hero-quote {
-      max-width: 520px;
-      font-size: clamp(.95rem, 2.5vw, 1.2rem);
-      color: #d4c4a0;
-      line-height: 1.8;
-      font-style: italic;
-      opacity: 0;
-      animation: riseIn .9s 1.3s forwards;
+      max-width: 500px; font-size: clamp(.9rem, 2.5vw, 1.15rem);
+      color: #c8b484; line-height: 1.85; font-style: italic;
+      opacity: 0; animation: riseIn .9s 1.3s forwards;
     }
-
     .scroll-cue {
       margin-top: 3rem;
       display: flex; flex-direction: column; align-items: center; gap: .5rem;
-      opacity: 0;
-      animation: riseIn .9s 1.6s forwards;
+      opacity: 0; animation: riseIn .9s 1.6s forwards;
     }
-    .scroll-cue span {
-      font-family: var(--sans);
-      font-size: .65rem;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: var(--gold-dk);
-    }
-    .scroll-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s 2s infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: .3; transform: scaleY(.8); }
-      50%       { opacity: 1;  transform: scaleY(1); }
-    }
+    .scroll-cue span { font-family: var(--sans); font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: var(--gold-dk); }
+    .scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s 2s infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)} }
+    @keyframes riseIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
-    @keyframes riseIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ───────────────────────────────────────────
-       SECTION COMMON
-    ─────────────────────────────────────────── */
+    /* ── SHARED ── */
     section { position: relative; z-index: 1; }
+    .section-eyebrow { font-family: var(--sans); font-size: .65rem; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: .9rem; }
+    .section-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 400; line-height: 1.15; color: var(--gold-lt); }
+    .section-body { font-size: clamp(.95rem, 2vw, 1.08rem); line-height: 1.95; color: #c8b890; max-width: 640px; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    .section-eyebrow {
-      font-family: var(--sans);
-      font-size: .65rem;
-      letter-spacing: .35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-    .section-title {
-      font-size: clamp(1.8rem, 5vw, 3.2rem);
-      font-weight: 400;
-      line-height: 1.15;
-      color: var(--gold-lt);
-    }
-    .section-body {
-      font-size: clamp(.95rem, 2vw, 1.1rem);
-      line-height: 1.9;
-      color: #c8b890;
-      max-width: 640px;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity .8s ease, transform .8s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ───────────────────────────────────────────
-       INTRO / ABOUT JUNE
-    ─────────────────────────────────────────── */
-    .about {
-      padding: 7rem 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
+    /* ── ABOUT ── */
+    .about { padding: 7rem 1.5rem; max-width: 860px; margin: 0 auto; text-align: center; }
     .about .section-body { margin: 1.5rem auto 0; }
 
-    /* ───────────────────────────────────────────
-       FEATURED PHOTO (full-bleed cinematic)
-    ─────────────────────────────────────────── */
-    .featured {
-      position: relative;
-      width: 100%;
-      height: 70svh;
-      overflow: hidden;
-    }
-    .featured img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-      filter: brightness(.75) saturate(1.1);
-    }
+    /* ── FEATURED ── */
+    .featured { position: relative; width: 100%; height: 70svh; overflow: hidden; }
+    .featured img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; filter: brightness(.7) saturate(1.1); }
     .featured-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, rgba(15,8,0,.85) 100%);
-      display: flex; align-items: flex-end;
-      padding: 3rem;
+      background: linear-gradient(to bottom, transparent 35%, rgba(12,6,0,.88) 100%);
+      display: flex; align-items: flex-end; padding: 2.5rem;
     }
-    .featured-caption {
-      font-size: clamp(1.4rem, 4vw, 2.5rem);
-      font-style: italic;
-      color: var(--gold-lt);
-      max-width: 600px;
-      line-height: 1.4;
-    }
+    .featured-caption { font-size: clamp(1.2rem, 3.5vw, 2.2rem); font-style: italic; color: var(--gold-lt); max-width: 580px; line-height: 1.45; }
 
-    /* ───────────────────────────────────────────
-       QUALITIES STRIP
-    ─────────────────────────────────────────── */
-    .qualities {
-      padding: 6rem 1.5rem;
-      text-align: center;
-    }
+    /* ── TIMELINE / STORY ── */
+    .story { padding: 6rem 1.5rem; }
+    .story-inner { max-width: 820px; margin: 0 auto; }
+    .story-header { text-align: center; margin-bottom: 3.5rem; }
+    .timeline { position: relative; padding-left: 2.2rem; }
+    .timeline::before { content: ''; position: absolute; left: .55rem; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,.1)); }
+    .tl-item { position: relative; margin-bottom: 2.8rem; }
+    .tl-dot { position: absolute; left: -2.2rem; top: .3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,.5); }
+    .tl-date { font-family: var(--sans); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-dk); margin-bottom: .35rem; }
+    .tl-text { font-size: clamp(.93rem, 2vw, 1.05rem); line-height: 1.9; color: #c0aa80; }
+
+    /* ── QUALITIES ── */
+    .qualities { padding: 6rem 1.5rem; text-align: center; }
     .qualities-inner { max-width: 1100px; margin: 0 auto; }
-    .qualities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
+    .qualities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.8rem; margin-top: 3rem; }
     .quality-card {
-      padding: 2rem 1.5rem;
-      border: 1px solid rgba(201,168,76,.2);
-      border-radius: 12px;
-      background: rgba(201,168,76,.04);
-      backdrop-filter: blur(6px);
-      transition: border-color .3s, transform .3s;
+      padding: 1.8rem 1.4rem; border: 1px solid rgba(201,168,76,.18); border-radius: 12px;
+      background: rgba(201,168,76,.03); transition: border-color .3s, transform .3s;
     }
-    .quality-card:hover {
-      border-color: rgba(201,168,76,.5);
-      transform: translateY(-4px);
-    }
-    .quality-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .quality-title {
-      font-size: 1.05rem;
-      color: var(--gold-lt);
-      margin-bottom: .6rem;
-    }
-    .quality-desc {
-      font-size: .9rem;
-      color: #9a8a70;
-      line-height: 1.7;
-      font-family: var(--sans);
-    }
+    .quality-card:hover { border-color: rgba(201,168,76,.45); transform: translateY(-4px); }
+    .quality-icon { font-size: 1.8rem; margin-bottom: .9rem; }
+    .quality-title { font-size: 1rem; color: var(--gold-lt); margin-bottom: .5rem; }
+    .quality-desc { font-size: .88rem; color: #8a7a60; line-height: 1.75; font-family: var(--sans); }
 
-    /* ───────────────────────────────────────────
-       GALLERY
-    ─────────────────────────────────────────── */
-    .gallery-section {
-      padding: 5rem 1rem 6rem;
-    }
-    .gallery-header {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 3rem;
-    }
-
-    /* masonry */
-    .grid {
-      columns: 2;
-      column-gap: 10px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    @media (min-width: 600px)  { .grid { columns: 3; } }
-    @media (min-width: 1000px) { .grid { columns: 4; } }
-
-    .grid-item {
-      break-inside: avoid;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      background: #111;
-    }
-    .grid-item::after {
-      content: '';
-      position: absolute; inset: 0;
-      border: 1px solid rgba(201,168,76,0);
-      border-radius: 8px;
-      transition: border-color .3s;
-    }
+    /* ── GALLERY ── */
+    .gallery-section { padding: 5rem 1rem 6rem; }
+    .gallery-header { text-align: center; max-width: 600px; margin: 0 auto 3rem; }
+    .grid { columns: 2; column-gap: 10px; max-width: 1400px; margin: 0 auto; }
+    @media(min-width:600px){.grid{columns:3}}
+    @media(min-width:1000px){.grid{columns:4}}
+    .grid-item { break-inside: avoid; margin-bottom: 10px; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer; background: #111; }
+    .grid-item::after { content:''; position: absolute; inset:0; border: 1px solid rgba(201,168,76,0); border-radius:8px; transition: border-color .3s; }
     .grid-item:hover::after { border-color: rgba(201,168,76,.5); }
-
-    .grid-item img {
-      width: 100%; display: block;
-      loading: lazy;
-      transition: transform .5s ease, filter .4s ease;
-    }
+    .grid-item img { width:100%; display:block; transition: transform .5s ease, filter .4s ease; }
     .grid-item:hover img { transform: scale(1.04); filter: brightness(1.05); }
+    .grid-item video { width:100%; display:block; max-height: 500px; object-fit: cover; }
+    .media-badge { position: absolute; top:.6rem; left:.6rem; background: rgba(0,0,0,.55); color: var(--gold); font-family: var(--sans); font-size:.6rem; letter-spacing:.15em; text-transform: uppercase; padding:.25rem .55rem; border-radius:20px; backdrop-filter: blur(4px); }
 
-    .grid-item video {
-      width: 100%; display: block;
-      max-height: 500px;
-      object-fit: cover;
-    }
+    /* ── VIDEO STRIP ── */
+    .video-strip { padding: 5rem 1rem; text-align: center; }
+    .video-strip-inner { max-width: 1100px; margin: 3rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+    .video-card { position: relative; border-radius: 14px; overflow: hidden; background: #111; box-shadow: 0 0 0 1px rgba(201,168,76,.15); transition: box-shadow .3s, transform .3s; }
+    .video-card:hover { box-shadow: 0 0 0 1.5px var(--gold), 0 16px 48px rgba(201,168,76,.2); transform: translateY(-4px); }
+    .video-card video { width:100%; display:block; max-height:480px; object-fit:cover; }
+    .video-card-label { position: absolute; bottom:0; left:0; right:0; padding:1.2rem 1rem .8rem; background: linear-gradient(transparent,rgba(0,0,0,.7)); color: var(--gold-lt); font-family: var(--sans); font-size:.7rem; letter-spacing:.2em; text-transform: uppercase; }
 
-    .media-badge {
-      position: absolute;
-      top: .6rem; left: .6rem;
-      background: rgba(0,0,0,.55);
-      color: var(--gold);
-      font-family: var(--sans);
-      font-size: .6rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      padding: .25rem .55rem;
-      border-radius: 20px;
-      backdrop-filter: blur(4px);
-    }
+    /* ── LETTER ── */
+    .letter { padding: 7rem 1.5rem; position: relative; overflow: hidden; }
+    .letter::before { content: '"'; position: absolute; top: 1rem; left: 1rem; font-size: 20rem; color: rgba(201,168,76,.04); font-family: Georgia, serif; line-height: 1; pointer-events: none; }
+    .letter-inner { max-width: 700px; margin: 0 auto; position: relative; }
+    .letter-text { font-size: clamp(.97rem, 2.4vw, 1.2rem); line-height: 2.05; color: #c8b080; font-style: italic; }
+    .letter-text p + p { margin-top: 1.5rem; }
+    .letter-sig { margin-top: 2.5rem; font-size: 1.05rem; color: var(--gold); }
 
-    /* ───────────────────────────────────────────
-       VIDEO STRIP (auto-play showcase)
-    ─────────────────────────────────────────── */
-    .video-strip {
-      padding: 5rem 1rem;
-      text-align: center;
-    }
-    .video-strip-inner {
-      max-width: 1100px;
-      margin: 3rem auto 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
-    }
-    .video-card {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #111;
-      box-shadow: 0 0 0 1px rgba(201,168,76,.15);
-      transition: box-shadow .3s, transform .3s;
-    }
-    .video-card:hover {
-      box-shadow: 0 0 0 1.5px var(--gold), 0 16px 48px rgba(201,168,76,.2);
-      transform: translateY(-4px);
-    }
-    .video-card video {
-      width: 100%; display: block;
-      max-height: 480px;
-      object-fit: cover;
-    }
-    .video-card-label {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 1.2rem 1rem .8rem;
-      background: linear-gradient(transparent, rgba(0,0,0,.7));
-      color: var(--gold-lt);
-      font-family: var(--sans);
-      font-size: .7rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-    }
+    /* ── LIGHTBOX ── */
+    .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,.95); z-index:2000; align-items:center; justify-content:center; }
+    .lightbox.open { display:flex; }
+    .lb-media { max-width: min(95vw,960px); max-height:90svh; border-radius:10px; object-fit:contain; }
+    .lb-btn { position:fixed; background:none; border:none; color: var(--gold-lt); cursor:pointer; font-size:2rem; line-height:1; z-index:2001; padding:.5rem; }
+    #lbClose{top:1rem;right:1.2rem;font-size:1.6rem}
+    #lbPrev{left:.6rem;top:50%;transform:translateY(-50%);font-size:2.8rem}
+    #lbNext{right:.6rem;top:50%;transform:translateY(-50%);font-size:2.8rem}
+    #lbCaption{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);color:#c0a870;font-family:var(--sans);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase}
 
-    /* ───────────────────────────────────────────
-       LETTER SECTION
-    ─────────────────────────────────────────── */
-    .letter {
-      padding: 7rem 1.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .letter::before {
-      content: '"';
-      position: absolute;
-      top: 1rem; left: 1rem;
-      font-size: 20rem;
-      color: rgba(201,168,76,.04);
-      font-family: Georgia, serif;
-      line-height: 1;
-      pointer-events: none;
-    }
-    .letter-inner {
-      max-width: 720px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .letter-text {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      line-height: 2;
-      color: #cdb990;
-      font-style: italic;
-    }
-    .letter-text p + p { margin-top: 1.4rem; }
-    .letter-sig {
-      margin-top: 2.5rem;
-      font-size: 1.1rem;
-      color: var(--gold);
-    }
-
-    /* ───────────────────────────────────────────
-       LIGHTBOX
-    ─────────────────────────────────────────── */
-    .lightbox {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.95);
-      z-index: 2000;
-      align-items: center; justify-content: center;
-    }
-    .lightbox.open { display: flex; }
-    .lb-media {
-      max-width: min(95vw, 960px);
-      max-height: 90svh;
-      border-radius: 10px;
-      object-fit: contain;
-    }
-    .lb-btn {
-      position: fixed;
-      background: none; border: none;
-      color: var(--gold-lt); cursor: pointer;
-      font-size: 2rem; line-height: 1;
-      z-index: 2001; padding: .5rem;
-    }
-    #lbClose { top: 1rem; right: 1.2rem; font-size: 1.6rem; }
-    #lbPrev  { left: .6rem; top: 50%; transform: translateY(-50%); font-size: 2.8rem; }
-    #lbNext  { right: .6rem; top: 50%; transform: translateY(-50%); font-size: 2.8rem; }
-    #lbCaption {
-      position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%);
-      color: #c0a870; font-family: var(--sans);
-      font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
-    }
-
-    /* ───────────────────────────────────────────
-       FOOTER
-    ─────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 4rem 1rem 5rem;
-      border-top: 1px solid rgba(201,168,76,.12);
-    }
-    .footer-name {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      color: transparent;
-      background: linear-gradient(135deg, #f5e09a, #c9a84c, #8a6820);
-      -webkit-background-clip: text; background-clip: text;
-      font-weight: 400;
-      margin-bottom: .8rem;
-    }
-    .footer-sub {
-      font-family: var(--sans);
-      font-size: .7rem;
-      letter-spacing: .3em;
-      text-transform: uppercase;
-      color: var(--gold-dk);
-    }
+    /* ── FOOTER ── */
+    footer { text-align:center; padding:4rem 1rem 5rem; border-top:1px solid rgba(201,168,76,.12); }
+    .footer-name { font-size: clamp(2rem,7vw,4.5rem); color:transparent; background: linear-gradient(135deg,#f5e09a,#c9a84c,#8a6820); -webkit-background-clip:text; background-clip:text; font-weight:400; margin-bottom:.8rem; }
+    .footer-sub { font-family: var(--sans); font-size:.7rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold-dk); }
   </style>
 </head>
 <body>
 
-<!-- ════ MUSIC IFRAME (hidden) ════ -->
-<!-- "Essence" by Wizkid ft. Tems — autoplay via YouTube embed -->
 <iframe id="music-frame"
   src="https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0"
-  allow="autoplay; encrypted-media"
-  frameborder="0"></iframe>
+  allow="autoplay; encrypted-media" frameborder="0"></iframe>
 
-<!-- ════ PARTICLE CANVAS ════ -->
 <canvas id="canvas"></canvas>
 
-<!-- ════ MUSIC TOGGLE BTN ════ -->
 <button class="music-btn" id="musicBtn" title="Toggle music" aria-label="Toggle music">
   <span class="note">🎵</span>
 </button>
 
-<!-- ════════════════════════════
-     HERO
-════════════════════════════ -->
+<!-- HERO -->
 <section class="hero">
-  <p class="hero-tag">A celebration of you</p>
+  <p class="hero-tag">June 19th</p>
   <h1 class="hero-name">June</h1>
-  <p class="hero-birthday">Happy, happy birthday, my dear.</p>
-  <p class="hero-date">June 19th &nbsp;·&nbsp; A day the world became brighter</p>
+  <p class="hero-sub">My guy. My sis. Happy birthday.</p>
+  <p class="hero-date">A day the world got a little luckier</p>
   <div class="hero-divider"></div>
   <p class="hero-quote">
-    "Some people light up every room they walk into — you light up every room
-    before you even arrive."
+    You have been real with me from day one. That kind of person does not come around often.
+    This one is for you.
   </p>
   <div class="scroll-cue">
-    <span>Scroll to celebrate</span>
+    <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
-<!-- ════════════════════════════
-     ABOUT
-════════════════════════════ -->
+<!-- ABOUT -->
 <section class="about reveal">
-  <p class="section-eyebrow">Who you are</p>
-  <h2 class="section-title">A whole vibe. A whole person.</h2>
+  <p class="section-eyebrow">Real talk</p>
+  <h2 class="section-title">June, you are actually that girl.</h2>
   <p class="section-body">
-    June, there is something undeniably magnetic about you. The way you carry yourself —
-    quietly confident, effortlessly beautiful, deeply genuine — it draws people in without
-    you even trying. You are the kind of person that stays with people long after they've
-    left the room. You are funny without trying, bold without being loud, and kind in a
-    way that feels completely natural to you. This birthday is not just a celebration of
-    the day you were born. It's a celebration of everything you've grown into — and
-    everything you're still becoming.
+    Not in a hype way. In a real way. From the first time we started talking I could tell you were different.
+    You are sharp, you are honest, and you do not pretend to be something you are not.
+    The way you carry yourself quietly, show up when it matters, and tell me the truth even when I do not
+    want to hear it? That is rare. I am not just saying this because it is your birthday.
+    I am saying it because it is true and you deserve to hear it.
   </p>
 </section>
 
-<!-- ════════════════════════════
-     FEATURED PHOTO
-════════════════════════════ -->
+<!-- FEATURED PHOTO -->
 <div class="featured reveal">
   <img src="media/IMG_5849.jpg" alt="June" loading="lazy" />
   <div class="featured-overlay">
-    <p class="featured-caption">"She walks in beauty, like the night."</p>
+    <p class="featured-caption">"Someone would see you and not know you sing in a Catholic choir." Exactly.</p>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     QUALITIES
-════════════════════════════ -->
-<section class="qualities">
-  <div class="qualities-inner">
-    <p class="section-eyebrow reveal">The things we love about you</p>
-    <h2 class="section-title reveal">A few reasons you're unforgettable</h2>
-    <div class="qualities-grid">
-      <div class="quality-card reveal">
-        <div class="quality-icon">✨</div>
-        <p class="quality-title">Radiantly herself</p>
-        <p class="quality-desc">You never pretend to be someone you're not. That authenticity is rarer than gold and more precious too.</p>
+<!-- STORY / TIMELINE -->
+<section class="story">
+  <div class="story-inner">
+    <div class="story-header reveal">
+      <p class="section-eyebrow">How we got here</p>
+      <h2 class="section-title">From "hey it's Kingdavid, didn't see you in church" to this</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">November 2023</p>
+        <p class="tl-text">
+          I texted you for the first time when you were sick. You told me not to come over. I came
+          to your street anyway to get suya and said nothing. You asked me to keep your own.
+          That was the beginning.
+        </p>
       </div>
-      <div class="quality-card reveal">
-        <div class="quality-icon">🤍</div>
-        <p class="quality-title">Generous in spirit</p>
-        <p class="quality-desc">You give of yourself freely — your time, your laughter, your presence. The people around you are so lucky.</p>
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">Early 2024</p>
+        <p class="tl-text">
+          You became the person I called when I did not know what to do. You gave me advice about
+          people, told me when I was moving wrong, and were not soft about it either. "Focus nigga.
+          Let her miss you ode." Honestly, good advice.
+        </p>
       </div>
-      <div class="quality-card reveal">
-        <div class="quality-icon">🔥</div>
-        <p class="quality-title">Quietly powerful</p>
-        <p class="quality-desc">There's a strength in you that doesn't need to announce itself. You simply show up and handle things.</p>
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">April 2024</p>
+        <p class="tl-text">
+          You called me out directly. Said I had drifted. I was not expecting that but you were right
+          and you said it anyway. That is the kind of person you are. You do not let things slide
+          just to keep peace.
+        </p>
       </div>
-      <div class="quality-card reveal">
-        <div class="quality-icon">🌸</div>
-        <p class="quality-title">Beautifully layered</p>
-        <p class="quality-desc">The more you get to know June, the more there is to discover. She is a whole universe in a single person.</p>
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">April 30, 2024</p>
+        <p class="tl-text">
+          221. JAMB result dropped and you were nervous to tell me. "Don't shout at me oo." My girllllll.
+          I was so proud. You worked for that and you got it. UNN. Mass Communication. That is your lane
+          and you know it.
+        </p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <p class="tl-date">Every morning</p>
+        <p class="tl-text">
+          I send you the link. You always say thank you. Some people receive things quietly and carry
+          them privately. You are one of those people. I see it even when you do not say much.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════
-     PHOTO GALLERY
-════════════════════════════ -->
+<!-- QUALITIES -->
+<section class="qualities">
+  <div class="qualities-inner">
+    <p class="section-eyebrow reveal">No cap</p>
+    <h2 class="section-title reveal">Things about you that I actually mean</h2>
+    <div class="qualities-grid">
+      <div class="quality-card reveal">
+        <div class="quality-icon">🗣️</div>
+        <p class="quality-title">Brutally honest</p>
+        <p class="quality-desc">You will tell me the truth and not soften it. That is not common. Most people just agree with you. You actually care enough to be real.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-icon">🤝</div>
+        <p class="quality-title">Solid when it counts</p>
+        <p class="quality-desc">When I needed to talk, you were there. When things were confusing, you helped me think. You show up even when you do not have to.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-icon">🔥</div>
+        <p class="quality-title">Stronger than you let on</p>
+        <p class="quality-desc">You have been through things that would have broken other people. You do not broadcast it. You just keep going. That takes real strength.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-icon">😂</div>
+        <p class="quality-title">Too funny abeg</p>
+        <p class="quality-desc">"I love you too baby." "Keep my own oo." "Big head." You are naturally funny and you do not even try. That is a gift honestly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
 <section class="gallery-section">
   <div class="gallery-header reveal">
-    <p class="section-eyebrow">Captured moments</p>
-    <h2 class="section-title">You, in all your glory</h2>
-    <p class="section-body" style="margin:.8rem auto 0; text-align:center;">
-      Every photo tells a story. Every smile holds a memory. Here's to the moments
-      we've caught on camera — and the thousand more we haven't.
+    <p class="section-eyebrow">Captured</p>
+    <h2 class="section-title">You in your element</h2>
+    <p class="section-body" style="margin:.8rem auto 0;text-align:center;">
+      Every photo of you has something in it. You cannot take a bad picture.
+      Annoying actually.
     </p>
   </div>
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- ════════════════════════════
-     VIDEO STRIP
-════════════════════════════ -->
+<!-- VIDEO STRIP -->
 <section class="video-strip">
-  <p class="section-eyebrow reveal">In motion</p>
-  <h2 class="section-title reveal">Because photos can't capture everything</h2>
+  <p class="section-eyebrow reveal">Moving pictures</p>
+  <h2 class="section-title reveal">Because still photos do not do it justice</h2>
   <div class="video-strip-inner" id="videoStrip"></div>
 </section>
 
-<!-- ════════════════════════════
-     LETTER
-════════════════════════════ -->
+<!-- LETTER -->
 <section class="letter">
   <div class="letter-inner reveal">
-    <p class="section-eyebrow">From the heart</p>
-    <h2 class="section-title" style="margin-bottom:2rem;">A letter to you, June</h2>
+    <p class="section-eyebrow">From me to you</p>
+    <h2 class="section-title" style="margin-bottom:2rem;">Real talk, June</h2>
     <div class="letter-text">
       <p>
-        I don't think you fully understand just how much you mean to the people
-        in your life. You have this rare ability to make everyone around you feel
-        seen, heard, and loved — and most of the time you don't even realise you're
-        doing it. That's just who you are.
+        I am not good at writing long emotional things. You know that. But it is your birthday
+        so I will try.
       </p>
       <p>
-        On this birthday, I want you to know that you are celebrated not just for
-        how you look (though God clearly took extra time with you), but for who you
-        are at your core — the warmth, the resilience, the laughter, the quiet depth
-        that makes people want to stay close to you.
+        You are one of the most genuine people I have met. Not in a boring way. In a way that
+        makes you trust someone quickly. You are sharp, you are kind without making a big deal
+        of it, and you actually listen when someone talks to you. A lot of people pretend to listen.
+        You actually do.
       </p>
       <p>
-        May this year bring you everything your heart has been quietly hoping for.
-        May doors open for you that you didn't even know to knock on. May every
-        dream you've whispered to yourself in private begin to find its way to you.
-        You deserve every single good thing.
+        I have watched you deal with real things this year and not complain about it publicly.
+        Living situation, family stuff, exams, work stress. You carry a lot and you still show up.
+        For choir, for people around you, for me when I needed to vent about my own nonsense.
+        That means something.
       </p>
       <p>
-        Happy birthday, June. You mean the world to me. Never forget that.
+        The JAMB result. The way you said "don't shout at me oo" before telling me 221.
+        I was proud of you then and I am still proud of you now. UNN is just the beginning.
+        You are going to do big things. I am not just saying that.
+      </p>
+      <p>
+        Happy birthday my guy. You deserve every good thing coming your way this year.
+        I am not going anywhere.
       </p>
     </div>
-    <p class="letter-sig">— With all the love in the world 🤍</p>
+    <p class="letter-sig">Kingdavid 🤍</p>
   </div>
 </section>
 
-<!-- ════════════════════════════
-     FOOTER
-════════════════════════════ -->
+<!-- FOOTER -->
 <footer class="reveal">
   <p class="footer-name">Happy Birthday June</p>
-  <p class="footer-sub">June 19th &nbsp;·&nbsp; forever celebrated &nbsp;·&nbsp; endlessly loved</p>
+  <p class="footer-sub">June 19th &nbsp;·&nbsp; celebrated &nbsp;·&nbsp; seen &nbsp;·&nbsp; loved</p>
 </footer>
 
-<!-- ════════════════════════════
-     LIGHTBOX
-════════════════════════════ -->
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lb-btn" id="lbClose">✕</button>
   <button class="lb-btn" id="lbPrev">‹</button>
@@ -676,95 +411,47 @@
 </div>
 
 <script>
-/* ════════════════════════════════════════════════
-   PARTICLE CANVAS
-════════════════════════════════════════════════ */
-(function () {
-  const canvas = document.getElementById('canvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, particles = [];
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function rand(a, b) { return a + Math.random() * (b - a); }
-
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(initial) {
-      this.x    = rand(0, W);
-      this.y    = initial ? rand(0, H) : H + 10;
-      this.r    = rand(1, 3.5);
-      this.vy   = rand(.3, 1.2);
-      this.vx   = rand(-.3, .3);
-      this.life = 0;
-      this.max  = rand(150, 300);
-      this.hue  = rand(35, 55);
-    }
-    tick() {
-      this.life++;
-      this.y -= this.vy;
-      this.x += this.vx;
-      const progress = this.life / this.max;
-      const alpha = progress < .1 ? progress * 10 : progress > .8 ? (1 - progress) * 5 : 1;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${this.hue}, 80%, 70%, ${alpha * .7})`;
-      ctx.fill();
-      if (this.life > this.max || this.y < -10) this.reset(false);
+/* PARTICLES */
+(function(){
+  const canvas=document.getElementById('canvas'), ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+  function rand(a,b){return a+Math.random()*(b-a);}
+  class Particle{
+    constructor(){this.reset(true);}
+    reset(init){this.x=rand(0,W);this.y=init?rand(0,H):H+10;this.r=rand(1,3.5);this.vy=rand(.3,1.2);this.vx=rand(-.3,.3);this.life=0;this.max=rand(150,300);this.hue=rand(35,55);}
+    tick(){
+      this.life++;this.y-=this.vy;this.x+=this.vx;
+      const p=this.life/this.max,a=p<.1?p*10:p>.8?(1-p)*5:1;
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${this.hue},80%,70%,${a*.7})`;ctx.fill();
+      if(this.life>this.max||this.y<-10)this.reset(false);
     }
   }
-
-  for (let i = 0; i < 60; i++) particles.push(new Particle());
-
-  function loop() {
-    ctx.clearRect(0, 0, W, H);
-    particles.forEach(p => p.tick());
-    requestAnimationFrame(loop);
-  }
+  for(let i=0;i<60;i++)particles.push(new Particle());
+  function loop(){ctx.clearRect(0,0,W,H);particles.forEach(p=>p.tick());requestAnimationFrame(loop);}
   loop();
 })();
 
-/* ════════════════════════════════════════════════
-   MUSIC TOGGLE
-════════════════════════════════════════════════ */
-(function () {
-  const btn    = document.getElementById('musicBtn');
-  const frame  = document.getElementById('music-frame');
-  let playing  = true; // starts playing
-
+/* MUSIC TOGGLE */
+(function(){
+  const btn=document.getElementById('musicBtn'), frame=document.getElementById('music-frame');
+  let playing=true;
   btn.classList.add('playing');
-
-  btn.addEventListener('click', () => {
-    playing = !playing;
-    /* Reload iframe to play, set src empty to pause */
-    if (playing) {
-      frame.src = "https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0";
-      btn.classList.add('playing');
-    } else {
-      frame.src = '';
-      btn.classList.remove('playing');
-    }
+  btn.addEventListener('click',()=>{
+    playing=!playing;
+    frame.src=playing?"https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0":'';
+    btn.classList.toggle('playing',playing);
   });
 })();
 
-/* ════════════════════════════════════════════════
-   REVEAL ON SCROLL
-════════════════════════════════════════════════ */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* REVEAL */
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-/* ════════════════════════════════════════════════
-   MEDIA MANIFEST
-   Photos → Photo 1…10   |   Videos → Video 1…2
-════════════════════════════════════════════════ */
-const photos = [
+/* MEDIA */
+const photos=[
   'media/739576aa-04e5-471b-b57f-991cc88aef46.JPG',
   'media/85d63615-be3a-463f-ba0c-736ad5c78543.JPG',
   'media/d81a0a9c-173c-4943-bf2c-782016ef876a.JPG',
@@ -776,139 +463,67 @@ const photos = [
   'media/IMG_5883.png',
   'media/IMG_6830.jpg',
 ];
-const videos = [
+const videos=[
   'media/AA78DC42-013B-46D2-8A70-15B28D834A92.MP4',
   'media/A9A20D9C-3F48-47E4-821E-84E51CE9B3EA.MP4',
 ];
+const allMedia=photos.map((src,i)=>({src,type:'image',label:`Photo ${i+1}`}));
 
-/* all media for lightbox indexing (photos only) */
-const allMedia = photos.map((src, i) => ({ src, type: 'image', label: `Photo ${i + 1}` }));
-
-/* ════════════════════════════════════════════════
-   BUILD PHOTO GRID
-════════════════════════════════════════════════ */
-const grid = document.getElementById('grid');
-photos.forEach((src, i) => {
-  const item  = document.createElement('div');
-  item.className = 'grid-item';
-  item.dataset.idx = i;
-
-  const img = document.createElement('img');
-  img.src     = src;
-  img.alt     = `Photo ${i + 1}`;
-  img.loading = 'lazy';
-  img.decoding = 'async';
-
-  const badge = document.createElement('span');
-  badge.className   = 'media-badge';
-  badge.textContent = `Photo ${i + 1}`;
-
-  item.appendChild(img);
-  item.appendChild(badge);
-  item.addEventListener('click', () => openLightbox(i));
+/* BUILD GRID */
+const grid=document.getElementById('grid');
+photos.forEach((src,i)=>{
+  const item=document.createElement('div');item.className='grid-item';item.dataset.idx=i;
+  const img=document.createElement('img');img.src=src;img.alt=`Photo ${i+1}`;img.loading='lazy';img.decoding='async';
+  const badge=document.createElement('span');badge.className='media-badge';badge.textContent=`Photo ${i+1}`;
+  item.appendChild(img);item.appendChild(badge);
+  item.addEventListener('click',()=>openLightbox(i));
   grid.appendChild(item);
 });
 
-/* ════════════════════════════════════════════════
-   BUILD VIDEO STRIP (autoplay, muted, looping)
-════════════════════════════════════════════════ */
-const videoStrip = document.getElementById('videoStrip');
-videos.forEach((src, i) => {
-  const card = document.createElement('div');
-  card.className = 'video-card';
-
-  const vid = document.createElement('video');
-  vid.src         = src;
-  vid.autoplay    = true;
-  vid.muted       = true;
-  vid.loop        = true;
-  vid.playsInline = true;
-  vid.controls    = true;        /* show controls so user can unmute */
-  vid.preload     = 'metadata';
-
-  const label = document.createElement('div');
-  label.className   = 'video-card-label';
-  label.textContent = `Video ${i + 1}`;
-
-  card.appendChild(vid);
-  card.appendChild(label);
-  videoStrip.appendChild(card);
+/* VIDEO STRIP */
+const strip=document.getElementById('videoStrip');
+videos.forEach((src,i)=>{
+  const card=document.createElement('div');card.className='video-card';
+  const vid=document.createElement('video');
+  vid.src=src;vid.autoplay=true;vid.muted=true;vid.loop=true;vid.playsInline=true;vid.controls=true;vid.preload='metadata';
+  const label=document.createElement('div');label.className='video-card-label';label.textContent=`Video ${i+1}`;
+  card.appendChild(vid);card.appendChild(label);strip.appendChild(card);
 });
 
-/* Also put autoplay videos in the photo grid (append after photos) */
-videos.forEach((src, i) => {
-  const item = document.createElement('div');
-  item.className = 'grid-item';
-
-  const vid = document.createElement('video');
-  vid.src         = src;
-  vid.autoplay    = true;
-  vid.muted       = true;
-  vid.loop        = true;
-  vid.playsInline = true;
-  vid.preload     = 'metadata';
-
-  const badge = document.createElement('span');
-  badge.className   = 'media-badge';
-  badge.textContent = `Video ${i + 1}`;
-
-  item.appendChild(vid);
-  item.appendChild(badge);
-  grid.appendChild(item);
+/* VIDEOS IN GRID */
+videos.forEach((src,i)=>{
+  const item=document.createElement('div');item.className='grid-item';
+  const vid=document.createElement('video');
+  vid.src=src;vid.autoplay=true;vid.muted=true;vid.loop=true;vid.playsInline=true;vid.preload='metadata';
+  const badge=document.createElement('span');badge.className='media-badge';badge.textContent=`Video ${i+1}`;
+  item.appendChild(vid);item.appendChild(badge);grid.appendChild(item);
 });
 
-/* Intersection observer to play/pause grid videos on scroll */
-const vidObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    const vid = e.target.querySelector('video');
-    if (!vid) return;
-    e.isIntersecting ? vid.play().catch(() => {}) : vid.pause();
-  });
-}, { threshold: .2 });
-document.querySelectorAll('.grid-item').forEach(item => {
-  if (item.querySelector('video')) vidObs.observe(item);
-});
+/* AUTOPLAY GRID VIDEOS ON SCROLL */
+const vidObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{const v=e.target.querySelector('video');if(!v)return;e.isIntersecting?v.play().catch(()=>{}):v.pause();});
+},{threshold:.2});
+document.querySelectorAll('.grid-item').forEach(item=>{if(item.querySelector('video'))vidObs.observe(item);});
 
-/* ════════════════════════════════════════════════
-   LIGHTBOX (photos only)
-════════════════════════════════════════════════ */
-const lightbox  = document.getElementById('lightbox');
-const lbContent = document.getElementById('lbContent');
-const lbCaption = document.getElementById('lbCaption');
-let currentIdx  = 0;
-
-function openLightbox(idx) {
-  currentIdx = idx;
-  render();
-  lightbox.classList.add('open');
-  document.body.style.overflow = 'hidden';
+/* LIGHTBOX */
+const lightbox=document.getElementById('lightbox'),lbContent=document.getElementById('lbContent'),lbCaption=document.getElementById('lbCaption');
+let currentIdx=0;
+function openLightbox(idx){currentIdx=idx;render();lightbox.classList.add('open');document.body.style.overflow='hidden';}
+function render(){
+  const m=allMedia[currentIdx];lbContent.innerHTML='';
+  const img=document.createElement('img');img.className='lb-media';img.src=m.src;img.alt=m.label;
+  lbContent.appendChild(img);lbCaption.textContent=m.label;
 }
-
-function render() {
-  const m = allMedia[currentIdx];
-  lbContent.innerHTML = '';
-  const img = document.createElement('img');
-  img.className = 'lb-media';
-  img.src = m.src;
-  img.alt = m.label;
-  lbContent.appendChild(img);
-  lbCaption.textContent = m.label;
-}
-
-function close() {
-  lightbox.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('lbClose').onclick = close;
-document.getElementById('lbPrev').onclick  = () => { currentIdx = (currentIdx - 1 + allMedia.length) % allMedia.length; render(); };
-document.getElementById('lbNext').onclick  = () => { currentIdx = (currentIdx + 1) % allMedia.length; render(); };
-lightbox.addEventListener('click', e => { if (e.target === lightbox) close(); });
-document.addEventListener('keydown', e => {
-  if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape')     close();
-  if (e.key === 'ArrowLeft')  { currentIdx = (currentIdx - 1 + allMedia.length) % allMedia.length; render(); }
-  if (e.key === 'ArrowRight') { currentIdx = (currentIdx + 1) % allMedia.length; render(); }
+function closeLb(){lightbox.classList.remove('open');document.body.style.overflow='';}
+document.getElementById('lbClose').onclick=closeLb;
+document.getElementById('lbPrev').onclick=()=>{currentIdx=(currentIdx-1+allMedia.length)%allMedia.length;render();};
+document.getElementById('lbNext').onclick=()=>{currentIdx=(currentIdx+1)%allMedia.length;render();};
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLb();});
+document.addEventListener('keydown',e=>{
+  if(!lightbox.classList.contains('open'))return;
+  if(e.key==='Escape')closeLb();
+  if(e.key==='ArrowLeft'){currentIdx=(currentIdx-1+allMedia.length)%allMedia.length;render();}
+  if(e.key==='ArrowRight'){currentIdx=(currentIdx+1)%allMedia.length;render();}
 });
 </script>
 </body>
