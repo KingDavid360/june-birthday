@@ -224,7 +224,8 @@
 </head>
 <body>
 
-<div id="yt-player" style="position:fixed;width:1px;height:1px;bottom:0;right:0;pointer-events:none;"></div>
+<!-- yt iframe lives here — needs real px dimensions or Safari blocks autoplay -->
+<div id="yt-wrap" style="position:fixed;bottom:0;right:0;width:0;height:0;overflow:hidden;z-index:998;"></div>
 
 <canvas id="canvas"></canvas>
 
@@ -239,12 +240,12 @@
 <section class="hero">
   <p class="hero-tag">June 19th</p>
   <h1 class="hero-name">June</h1>
-  <p class="hero-sub">My closest person. Happy birthday, werey.</p>
-  <p class="hero-date">Amina. Celebrated today and every day.</p>
+  <p class="hero-sub">Happy birthday, Amina.</p>
+  <p class="hero-date">Today is yours</p>
   <div class="hero-divider"></div>
   <p class="hero-quote">
-    You are the person I call when something happens. Good or bad.
-    That is not something I take lightly.
+    There are not many people like you. I mean that genuinely.
+    This one is for you.
   </p>
   <div class="scroll-cue">
     <span>Scroll</span>
@@ -254,15 +255,14 @@
 
 <!-- ABOUT -->
 <section class="about reveal">
-  <p class="section-eyebrow">No cap, no long thing</p>
-  <h2 class="section-title">Amina, you are genuinely my person.</h2>
+  <p class="section-eyebrow">Real talk</p>
+  <h2 class="section-title">There is nobody like you, June.</h2>
   <p class="section-body">
-    There is no one I talk to the way I talk to you. You know everything,
-    you have heard all the gist, you have given me advice I did not ask for
-    and were right about it. You call me out, you check on me,
-    and then you disappear for three hours because you fell asleep. Every time.
-    But you always come back so I let it slide. You are my closest friend
-    and I actually mean that.
+    You are funny without trying, honest without being harsh,
+    and real in a way most people are not. You check on people,
+    you give advice you were not asked for and are usually right,
+    and then you disappear for three hours because you fell asleep.
+    But you always come back. Happy birthday. You deserve everything good.
   </p>
 </section>
 
@@ -270,7 +270,7 @@
 <div class="featured reveal">
   <img src="media/IMG_5849.jpg" alt="June" loading="lazy" />
   <div class="featured-overlay">
-    <p class="featured-caption">She said she was not coming out. She came out. That is June for you.</p>
+    <p class="featured-caption">You walk in and something shifts. Every time.</p>
   </div>
 </div>
 
@@ -278,27 +278,25 @@
 <section class="story">
   <div class="story-inner">
     <div class="story-header reveal">
-      <p class="section-eyebrow">How it went</p>
-      <h2 class="section-title">From "okay" to my closest person</h2>
+      <p class="section-eyebrow">How we got here</p>
+      <h2 class="section-title">From strangers to this</h2>
     </div>
     <div class="timeline">
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <p class="tl-date">The beginning</p>
         <p class="tl-text">
-          We started talking and something about it just felt easy. You were
-          not trying to impress anyone. You were just yourself. That was
-          enough for me to know you were different.
+          We started talking and it just felt easy. You were not trying to
+          impress anyone. You were just yourself. That stood out immediately.
         </p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">When I knew</p>
+        <p class="tl-date">Getting to know you</p>
         <p class="tl-text">
-          You became the person I actually vented to. Not just small talk.
-          Real conversations. You listened properly, gave real advice,
-          and then told me when I was the one moving wrong. Not everyone
-          does that. Most people just agree with you. Not Amina.
+          You became the person I actually talked to. Real conversations.
+          You listened, gave honest advice, and told me when I was moving
+          wrong. Most people just agree with you. Not Amina.
         </p>
       </div>
       <div class="tl-item reveal">
@@ -306,18 +304,16 @@
         <p class="tl-date">The stubbornness era (ongoing)</p>
         <p class="tl-text">
           You said you would call. You did not call. You said you were not
-          coming. You came. You said never. You meant never but still showed
-          up anyway. I do not fully understand how your logic works but
-          somehow it always makes sense in the end.
+          coming. You came. You said never and meant it but did the thing
+          anyway. I still do not fully understand the logic but it works.
         </p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
         <p class="tl-date">Now</p>
         <p class="tl-text">
-          You are my closest friend. I am not going anywhere. Not even when
-          you ghost me for hours and come back with "sorry I was asleep."
-          Happy birthday June. This one is for you.
+          I am glad I know you, June. Not going anywhere either.
+          Not even when you ghost me and come back with "sorry I was asleep."
         </p>
       </div>
     </div>
@@ -327,28 +323,28 @@
 <!-- QUALITIES -->
 <section class="qualities">
   <div class="qualities-inner">
-    <p class="section-eyebrow reveal">Things I will never tell you in person</p>
-    <h2 class="section-title reveal">What makes you, you</h2>
+    <p class="section-eyebrow reveal">What I know about you</p>
+    <h2 class="section-title reveal">A few things that make you, you</h2>
     <div class="qualities-grid">
       <div class="quality-card reveal">
         <div class="quality-icon">🗣️</div>
-        <p class="quality-title">Brutally honest</p>
-        <p class="quality-desc">You will tell me the truth even when I do not want to hear it. No softening, no packaging. Just straight. That is the kind of person you need around you.</p>
+        <p class="quality-title">Keeps it real</p>
+        <p class="quality-desc">You say what you mean. No softening, no packaging. Just straight. That is rarer than people think and you do it without even trying.</p>
       </div>
       <div class="quality-card reveal">
         <div class="quality-icon">🤍</div>
-        <p class="quality-title">The best gist partner</p>
-        <p class="quality-desc">You know everything. You remember everything. You ask the right questions. Talking to you never feels like a waste of time. Ever.</p>
+        <p class="quality-title">Actually cares</p>
+        <p class="quality-desc">You check on people, you pay attention, you remember things. It is quiet but it lands. The people around you are lucky even when they do not say it.</p>
       </div>
       <div class="quality-card reveal">
         <div class="quality-icon">😤</div>
-        <p class="quality-title">Stubborn like no other</p>
-        <p class="quality-desc">You will say "neverrr" and mean it 100%. Then do the exact thing five minutes later and act like nothing happened. Honestly impressive. Annoying but impressive.</p>
+        <p class="quality-title">Stubborn to her core</p>
+        <p class="quality-desc">Says "neverrr" and means it completely. Does the thing anyway. Acts like nothing happened. Genuinely impressive. Also genuinely annoying. Both at the same time.</p>
       </div>
       <div class="quality-card reveal">
-        <div class="quality-icon">😂</div>
-        <p class="quality-title">Naturally too funny</p>
-        <p class="quality-desc">"Before nko." "Waka." "Gettat." You do not even try and yet somehow always land it. One of the funniest people I know and you do not even rate yourself for it.</p>
+        <div class="quality-icon">😄</div>
+        <p class="quality-title">Naturally funny</p>
+        <p class="quality-desc">Not trying to be. Just is. The timing, the delivery, the way you respond to things. You do not even notice how funny you are and that makes it better.</p>
       </div>
     </div>
   </div>
@@ -357,11 +353,10 @@
 <!-- GALLERY -->
 <section class="gallery-section">
   <div class="gallery-header reveal">
-    <p class="section-eyebrow">Evidence</p>
-    <h2 class="section-title">You and your big head 😭</h2>
+    <p class="section-eyebrow">Captured</p>
+    <h2 class="section-title">You in your element</h2>
     <p class="section-body" style="margin:.8rem auto 0;text-align:center;">
-      You genuinely cannot take a bad photo. It is unfair.
-      The rest of us are suffering and you are just there looking like this.
+      You cannot take a bad photo. It is genuinely unfair.
     </p>
   </div>
   <div class="grid" id="grid"></div>
@@ -372,37 +367,26 @@
 <!-- LETTER -->
 <section class="letter">
   <div class="letter-inner reveal">
-    <p class="section-eyebrow">From me to you, for real this time</p>
-    <h2 class="section-title" style="margin-bottom:2rem;">June. Amina. Werey.</h2>
+    <p class="section-eyebrow">From me to you</p>
+    <h2 class="section-title" style="margin-bottom:2rem;">Real talk, Amina</h2>
     <div class="letter-text">
       <p>
-        I do not write things like this normally. You know that.
-        But it is your birthday and you are my closest person so I will
-        just say it plainly.
+        I do not usually do stuff like this. But it is your birthday so here we are.
       </p>
       <p>
-        You are the friend that actually shows up. Not just when things are
-        fine. When things are bad too. When I am venting about something
-        and need someone to just hear me, it is you I go to.
-        When I need honest advice and not just someone to agree with me,
-        it is still you. That means a lot more than you know.
+        You are one of those people that make things better just by being around.
+        Not because you are trying to. Just because of who you are. The way you
+        talk, the way you think, the way you show up for people without making
+        it a whole thing. It is quiet but it lands every time.
       </p>
       <p>
-        You are also genuinely stubborn and you disappear for hours without
-        warning and you always have an excuse ready. But honestly? Even that
-        is very on brand for you and I would not change it.
-        "Sorry I was asleep." Classic Amina.
+        You have dealt with a lot this year and did not make noise about it.
+        You just kept going. Most people would not even notice that.
+        I noticed.
       </p>
       <p>
-        You have handled a lot quietly this year. I have been watching.
-        You did not make noise about it, you did not ask for anything,
-        you just handled it and kept going. I respect that about you more
-        than you know.
-      </p>
-      <p>
-        Happy birthday, June. I hope this year gives you everything.
-        The real things. The things you actually want.
-        You deserve all of it. Now go and enjoy your day, werey.
+        Happy birthday, June. I hope this year brings you everything
+        you have been working towards. You have earned it.
       </p>
     </div>
     <p class="letter-sig">Kingdavid 🤍</p>
@@ -412,7 +396,7 @@
 <!-- FOOTER -->
 <footer class="reveal">
   <p class="footer-name">Happy Birthday June</p>
-  <p class="footer-sub">June 19th &nbsp;·&nbsp; Amina &nbsp;·&nbsp; my closest person &nbsp;·&nbsp; forever celebrated</p>
+  <p class="footer-sub">June 19th &nbsp;·&nbsp; celebrated &nbsp;·&nbsp; seen &nbsp;·&nbsp; loved</p>
 </footer>
 
 <!-- LIGHTBOX -->
@@ -448,48 +432,28 @@
   loop();
 })();
 
-/* MUSIC — YouTube IFrame API loaded on first tap (only way browsers allow audio) */
+/* MUSIC — inject iframe on first tap; real dimensions so browser allows autoplay */
 (function(){
   const prompt = document.getElementById('musicPrompt');
   const btn    = document.getElementById('musicBtn');
   const label  = document.getElementById('musicLabel');
-  let player, ready = false, playing = false;
+  let started  = false;
 
-  window.onYouTubeIframeAPIReady = function(){
-    player = new YT.Player('yt-player', {
-      height: '1', width: '1',
-      videoId: 'Bo7KAFctlm0',            // Wizkid – Essence ft. Tems (official audio)
-      playerVars: { autoplay: 1, loop: 1, playlist: 'Bo7KAFctlm0', controls: 0 },
-      events: {
-        onReady: function(e){
-          ready = true;
-          e.target.playVideo();
-          playing = true;
-          btn.classList.add('playing');
-          label.classList.add('hidden');
-        },
-        onError: function(){
-          /* fallback: try alternative video ID */
-          player.loadVideoById('xKFkHb91kZs');
-        }
-      }
-    });
-  };
-
-  function loadAPI(){
-    if(window.YT && window.YT.Player){ window.onYouTubeIframeAPIReady(); return; }
-    const s = document.createElement('script');
-    s.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(s);
-  }
+  /* iframe lives off-screen but has real px size — opacity:0 still allows autoplay */
+  const fr = document.createElement('iframe');
+  fr.width  = '200';
+  fr.height = '1';
+  fr.frameBorder = '0';
+  fr.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  fr.style.cssText = 'position:fixed;bottom:0;right:0;opacity:0.01;pointer-events:none;';
 
   prompt.addEventListener('click', function(){
-    if(!ready && !window.YT){
-      loadAPI();
-    } else if(ready){
-      if(playing){ player.pauseVideo(); btn.classList.remove('playing'); }
-      else        { player.playVideo();  btn.classList.add('playing');    }
-      playing = !playing;
+    if(!started){
+      fr.src = 'https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs';
+      document.body.appendChild(fr);
+      started = true;
+      btn.classList.add('playing');
+      label.classList.add('hidden');
     }
   });
 })();
