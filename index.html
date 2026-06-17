@@ -31,18 +31,37 @@
       position: fixed; width: 1px; height: 1px;
       opacity: 0; pointer-events: none; bottom: 0; right: 0;
     }
-    .music-btn {
+    .music-prompt {
       position: fixed; bottom: 1.4rem; right: 1.4rem;
+      display: flex; align-items: center; gap: .7rem;
+      z-index: 999; cursor: pointer;
+      animation: promptPulse 2s ease-in-out infinite;
+    }
+    .music-prompt-label {
+      background: rgba(201,168,76,.15);
+      border: 1px solid rgba(201,168,76,.4);
+      color: var(--gold-lt);
+      font-family: var(--sans);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      padding: .4rem .9rem;
+      border-radius: 20px;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+    }
+    .music-btn {
       width: 52px; height: 52px; border-radius: 50%;
       background: var(--gold); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.3rem;
       box-shadow: 0 4px 20px rgba(201,168,76,.5);
-      z-index: 999; transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, box-shadow .2s; flex-shrink: 0;
     }
     .music-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(201,168,76,.7); }
     .music-btn.playing .note { animation: spin 3s linear infinite; display: inline-block; }
+    .music-prompt-label.hidden { display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes promptPulse { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
 
     /* ── CANVAS ── */
     #canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
@@ -205,15 +224,16 @@
 </head>
 <body>
 
-<iframe id="music-frame"
-  src="https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0"
-  allow="autoplay; encrypted-media" frameborder="0"></iframe>
+<iframe id="music-frame" src="" allow="autoplay; encrypted-media" frameborder="0"></iframe>
 
 <canvas id="canvas"></canvas>
 
-<button class="music-btn" id="musicBtn" title="Toggle music" aria-label="Toggle music">
-  <span class="note">🎵</span>
-</button>
+<div class="music-prompt" id="musicPrompt">
+  <span class="music-prompt-label" id="musicLabel">Tap to play music</span>
+  <button class="music-btn" id="musicBtn" aria-label="Toggle music">
+    <span class="note">🎵</span>
+  </button>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -235,13 +255,12 @@
 <!-- ABOUT -->
 <section class="about reveal">
   <p class="section-eyebrow">Real talk</p>
-  <h2 class="section-title">June, you are actually that girl.</h2>
+  <h2 class="section-title">There is nobody like you, June.</h2>
   <p class="section-body">
-    Not in a hype way. In a real way. From the first time we started talking I could tell you were different.
-    You are sharp, you are honest, and you do not pretend to be something you are not.
-    The way you carry yourself quietly, show up when it matters, and tell me the truth even when I do not
-    want to hear it? That is rare. I am not just saying this because it is your birthday.
-    I am saying it because it is true and you deserve to hear it.
+    I mean that. You are funny without trying, caring without making a show of it,
+    and real in a way that most people are not. You just have this thing about you
+    where people want to be around you and half the time you do not even notice.
+    That is your gift. Happy birthday. You deserve everything good.
   </p>
 </section>
 
@@ -249,7 +268,7 @@
 <div class="featured reveal">
   <img src="media/IMG_5849.jpg" alt="June" loading="lazy" />
   <div class="featured-overlay">
-    <p class="featured-caption">"Someone would see you and not know you sing in a Catholic choir." Exactly.</p>
+    <p class="featured-caption">You walk into a place and something shifts. Every time.</p>
   </div>
 </div>
 
@@ -258,51 +277,43 @@
   <div class="story-inner">
     <div class="story-header reveal">
       <p class="section-eyebrow">How we got here</p>
-      <h2 class="section-title">From "hey it's Kingdavid, didn't see you in church" to this</h2>
+      <h2 class="section-title">From strangers to this</h2>
     </div>
     <div class="timeline">
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">November 2023</p>
+        <p class="tl-date">The beginning</p>
         <p class="tl-text">
-          I texted you for the first time when you were sick. You told me not to come over. I came
-          to your street anyway to get suya and said nothing. You asked me to keep your own.
-          That was the beginning.
+          We started talking small. Normal conversations. But I noticed early on
+          that you were not like most people. You were easy to talk to and you did not
+          pretend. That stood out.
         </p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">Early 2024</p>
+        <p class="tl-date">Getting to know you</p>
         <p class="tl-text">
-          You became the person I called when I did not know what to do. You gave me advice about
-          people, told me when I was moving wrong, and were not soft about it either. "Focus nigga.
-          Let her miss you ode." Honestly, good advice.
+          You became the person I actually talked to. Not just chatted with. You gave
+          me real advice, checked on me, and called me out when I was moving wrong.
+          That is not something everyone does.
         </p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">April 2024</p>
+        <p class="tl-date">The friendship</p>
         <p class="tl-text">
-          You called me out directly. Said I had drifted. I was not expecting that but you were right
-          and you said it anyway. That is the kind of person you are. You do not let things slide
-          just to keep peace.
+          We argued sometimes. You had your moments, I had mine. But we always came back
+          to each other. That is when I knew this was a real friendship and not just
+          something casual.
         </p>
       </div>
       <div class="tl-item reveal">
         <div class="tl-dot"></div>
-        <p class="tl-date">April 30, 2024</p>
+        <p class="tl-date">Now</p>
         <p class="tl-text">
-          221. JAMB result dropped and you were nervous to tell me. "Don't shout at me oo." My girllllll.
-          I was so proud. You worked for that and you got it. UNN. Mass Communication. That is your lane
-          and you know it.
-        </p>
-      </div>
-      <div class="tl-item reveal">
-        <div class="tl-dot"></div>
-        <p class="tl-date">Every morning</p>
-        <p class="tl-text">
-          I send you the link. You always say thank you. Some people receive things quietly and carry
-          them privately. You are one of those people. I see it even when you do not say much.
+          You are someone I genuinely appreciate. Not because I have to say it
+          on your birthday. Because it is true and you deserve to hear it.
+          I am glad I know you, June.
         </p>
       </div>
     </div>
@@ -312,28 +323,28 @@
 <!-- QUALITIES -->
 <section class="qualities">
   <div class="qualities-inner">
-    <p class="section-eyebrow reveal">No cap</p>
-    <h2 class="section-title reveal">Things about you that I actually mean</h2>
+    <p class="section-eyebrow reveal">What I know about you</p>
+    <h2 class="section-title reveal">A few things that make you, you</h2>
     <div class="qualities-grid">
       <div class="quality-card reveal">
         <div class="quality-icon">🗣️</div>
-        <p class="quality-title">Brutally honest</p>
-        <p class="quality-desc">You will tell me the truth and not soften it. That is not common. Most people just agree with you. You actually care enough to be real.</p>
+        <p class="quality-title">You keep it real</p>
+        <p class="quality-desc">You say what you mean and you mean what you say. That sounds simple but it is actually hard to find in people. You just do it naturally.</p>
       </div>
       <div class="quality-card reveal">
-        <div class="quality-icon">🤝</div>
-        <p class="quality-title">Solid when it counts</p>
-        <p class="quality-desc">When I needed to talk, you were there. When things were confusing, you helped me think. You show up even when you do not have to.</p>
+        <div class="quality-icon">🤍</div>
+        <p class="quality-title">You actually care</p>
+        <p class="quality-desc">Not in a surface way. You check on people, you pay attention, you remember things. The people around you are lucky even if they do not always say it.</p>
       </div>
       <div class="quality-card reveal">
         <div class="quality-icon">🔥</div>
-        <p class="quality-title">Stronger than you let on</p>
-        <p class="quality-desc">You have been through things that would have broken other people. You do not broadcast it. You just keep going. That takes real strength.</p>
+        <p class="quality-title">You are tougher than you look</p>
+        <p class="quality-desc">You handle things quietly. You do not make a big deal out of hard moments. You just deal with it and keep moving. That is not small.</p>
       </div>
       <div class="quality-card reveal">
-        <div class="quality-icon">😂</div>
-        <p class="quality-title">Too funny abeg</p>
-        <p class="quality-desc">"I love you too baby." "Keep my own oo." "Big head." You are naturally funny and you do not even try. That is a gift honestly.</p>
+        <div class="quality-icon">😄</div>
+        <p class="quality-title">You are genuinely funny</p>
+        <p class="quality-desc">Not trying to be. Just naturally. The way you respond to things, the timing, the delivery. You do not even know how funny you are and that makes it better.</p>
       </div>
     </div>
   </div>
@@ -352,12 +363,7 @@
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- VIDEO STRIP -->
-<section class="video-strip">
-  <p class="section-eyebrow reveal">Moving pictures</p>
-  <h2 class="section-title reveal">Because still photos do not do it justice</h2>
-  <div class="video-strip-inner" id="videoStrip"></div>
-</section>
+<div style="max-width:1100px;margin:0 auto;padding:0 1rem 4rem;" id="videoStrip" class="video-strip-inner"></div>
 
 <!-- LETTER -->
 <section class="letter">
@@ -366,29 +372,27 @@
     <h2 class="section-title" style="margin-bottom:2rem;">Real talk, June</h2>
     <div class="letter-text">
       <p>
-        I am not good at writing long emotional things. You know that. But it is your birthday
-        so I will try.
+        I do not usually do stuff like this. But it is your birthday and you are
+        someone I actually rate, so here we are.
       </p>
       <p>
-        You are one of the most genuine people I have met. Not in a boring way. In a way that
-        makes you trust someone quickly. You are sharp, you are kind without making a big deal
-        of it, and you actually listen when someone talks to you. A lot of people pretend to listen.
-        You actually do.
+        You are one of those people that make things better just by being around.
+        Not because you are trying to. Just because of who you are. The way you
+        talk, the way you think, the way you check on people without making it a
+        whole thing. It is quiet but it lands.
       </p>
       <p>
-        I have watched you deal with real things this year and not complain about it publicly.
-        Living situation, family stuff, exams, work stress. You carry a lot and you still show up.
-        For choir, for people around you, for me when I needed to vent about my own nonsense.
-        That means something.
+        I have seen you go through things this year and handle them without
+        making noise about it. You just kept moving. That is not easy and most
+        people would not even notice. I noticed.
       </p>
       <p>
-        The JAMB result. The way you said "don't shout at me oo" before telling me 221.
-        I was proud of you then and I am still proud of you now. UNN is just the beginning.
-        You are going to do big things. I am not just saying that.
+        You deserve good things, June. Real ones. I hope this year brings you
+        everything you have been working towards and some things you were not
+        even expecting. You have earned it.
       </p>
       <p>
-        Happy birthday my guy. You deserve every good thing coming your way this year.
-        I am not going anywhere.
+        Happy birthday. I am glad you are my person.
       </p>
     </div>
     <p class="letter-sig">Kingdavid 🤍</p>
@@ -434,15 +438,25 @@
   loop();
 })();
 
-/* MUSIC TOGGLE */
+/* MUSIC — loads only after user tap so browser allows audio */
 (function(){
-  const btn=document.getElementById('musicBtn'), frame=document.getElementById('music-frame');
-  let playing=true;
-  btn.classList.add('playing');
-  btn.addEventListener('click',()=>{
-    playing=!playing;
-    frame.src=playing?"https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0":'';
-    btn.classList.toggle('playing',playing);
+  const prompt=document.getElementById('musicPrompt');
+  const btn=document.getElementById('musicBtn');
+  const label=document.getElementById('musicLabel');
+  const frame=document.getElementById('music-frame');
+  let started=false, playing=false;
+
+  prompt.addEventListener('click',()=>{
+    if(!started){
+      frame.src='https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0';
+      started=true; playing=true;
+      btn.classList.add('playing');
+      label.classList.add('hidden');
+    } else {
+      playing=!playing;
+      frame.src=playing?'https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0':'';
+      btn.classList.toggle('playing',playing);
+    }
   });
 })();
 
