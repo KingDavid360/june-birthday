@@ -224,7 +224,7 @@
 </head>
 <body>
 
-<iframe id="music-frame" src="" allow="autoplay; encrypted-media" frameborder="0"></iframe>
+<div id="yt-player" style="position:fixed;width:1px;height:1px;bottom:0;right:0;pointer-events:none;"></div>
 
 <canvas id="canvas"></canvas>
 
@@ -438,24 +438,48 @@
   loop();
 })();
 
-/* MUSIC — loads only after user tap so browser allows audio */
+/* MUSIC — YouTube IFrame API loaded on first tap (only way browsers allow audio) */
 (function(){
-  const prompt=document.getElementById('musicPrompt');
-  const btn=document.getElementById('musicBtn');
-  const label=document.getElementById('musicLabel');
-  const frame=document.getElementById('music-frame');
-  let started=false, playing=false;
+  const prompt = document.getElementById('musicPrompt');
+  const btn    = document.getElementById('musicBtn');
+  const label  = document.getElementById('musicLabel');
+  let player, ready = false, playing = false;
 
-  prompt.addEventListener('click',()=>{
-    if(!started){
-      frame.src='https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0';
-      started=true; playing=true;
-      btn.classList.add('playing');
-      label.classList.add('hidden');
-    } else {
-      playing=!playing;
-      frame.src=playing?'https://www.youtube.com/embed/xKFkHb91kZs?autoplay=1&loop=1&playlist=xKFkHb91kZs&mute=0':'';
-      btn.classList.toggle('playing',playing);
+  window.onYouTubeIframeAPIReady = function(){
+    player = new YT.Player('yt-player', {
+      height: '1', width: '1',
+      videoId: 'Bo7KAFctlm0',            // Wizkid – Essence ft. Tems (official audio)
+      playerVars: { autoplay: 1, loop: 1, playlist: 'Bo7KAFctlm0', controls: 0 },
+      events: {
+        onReady: function(e){
+          ready = true;
+          e.target.playVideo();
+          playing = true;
+          btn.classList.add('playing');
+          label.classList.add('hidden');
+        },
+        onError: function(){
+          /* fallback: try alternative video ID */
+          player.loadVideoById('xKFkHb91kZs');
+        }
+      }
+    });
+  };
+
+  function loadAPI(){
+    if(window.YT && window.YT.Player){ window.onYouTubeIframeAPIReady(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(s);
+  }
+
+  prompt.addEventListener('click', function(){
+    if(!ready && !window.YT){
+      loadAPI();
+    } else if(ready){
+      if(playing){ player.pauseVideo(); btn.classList.remove('playing'); }
+      else        { player.playVideo();  btn.classList.add('playing');    }
+      playing = !playing;
     }
   });
 })();
@@ -473,13 +497,13 @@ const photos=[
   'media/IMG_5443.jpg',
   'media/IMG_5849.jpg',
   'media/IMG_5851.jpg',
-  'media/IMG_5878.png',
-  'media/IMG_5883.png',
+  'media/IMG_5878.jpg',
+  'media/IMG_5883.jpg',
   'media/IMG_6830.jpg',
 ];
 const videos=[
-  'media/AA78DC42-013B-46D2-8A70-15B28D834A92.MP4',
-  'media/A9A20D9C-3F48-47E4-821E-84E51CE9B3EA.MP4',
+  'media/video1.mp4',
+  'media/video2.mp4',
 ];
 const allMedia=photos.map((src,i)=>({src,type:'image',label:`Photo ${i+1}`}));
 
